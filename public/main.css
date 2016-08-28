@@ -1,0 +1,46 @@
+h1, h2, h4, h5 {
+	font-family: HelveticaNeue-Light;
+}
+
+h1 {
+	color: rgb(0, 150, 0);
+}
+
+h2 {
+	color: rgb(0, 100, 100);
+}
+
+button {
+	width: 100%;
+}
+
+.container-fluid {
+	margin: 5%;
+}
+
+.well {
+	padding: 5%;
+	margin: 5%;
+}
+
+ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+}
+
+li {
+    float: right;
+}
+
+li a {
+	color: white;
+    display: block;
+    padding: 8px;
+    background-color: rgb(0, 150, 0);
+}
+
+a:hover {
+	color: white
+}
