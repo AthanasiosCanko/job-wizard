@@ -7,26 +7,124 @@
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.css"/>
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.css"/>
 		<link rel="stylesheet" href="main.css"/>
+		<script src="//code.jquery.com/jquery-2.1.0.js"></script>
 	</head>
+	
+	<script>
+		$(document).ready(function() {
+			$("#signup").on("click", function() {
+				$.ajax({
+					url: "/employee_signup",
+					type: "POST",
+					dataType: "json",
+					data: {
+						first: $("#first").val(),
+						last: $("#last").val(),
+						email: $("#email").val(),
+						password: $("#password").val(),
+						education: $("#education").val(),
+						occupation: $("#occupation").val(),
+						day: $("#day").val(),
+						month: $("#month").val(),
+						year: $("#year").val()
+					},
+					success: function(json) {
+					
+						var message = JSON.stringify(json.message);
+						messageArray = message.split("");
+						messageArray.pop();
+						messageArray.shift();
+						message = messageArray.join("");
+						
+						$("#log").html("<p style='color: green'>" + message + "</p>");
+						/*
+						$.ajax({
+ 							type: "POST",
+  							url: "https://mandrillapp.com/api/1.0/messages/send.json",
+						  	data: {
+    							key: "da3c27ef379c622eadb8c759561a8071-us14",
+    							message: {
+      								from_email: "cankoathanasios@gmail.com",
+							     		to: [
+	          								{
+    	        								email: $("#email").val(),
+        	    								type: "to"
+							       		  	}
+        								],
+      								subject: "Welcome to Job Wizard!",
+      								text: "Hello, welcome!"
+    							}
+  							},
+  							success: function() {
+  								console.log("Success!");
+  							}
+						});
+						*/
+					},
+					error: function(err) {
+					
+						var message = JSON.stringify(err.responseJSON.message);
+						messageArray = message.split("");
+						messageArray.pop();
+						messageArray.shift();
+						message = messageArray.join("");
+					
+						$("#log").html("<p style='color: crimson'>" + message + "</p>");
+						//console.error(JSON.stringify(err.responseJSON.message));
+					}
+				});
+			
+			});
+			
+			$("#login").on("click", function() {
+				$.ajax({
+					url: '/home',
+					type: 'GET',
+					success: function(json) {
+						var message = JSON.stringify(json);
+						messageArray = message.split("");
+						messageArray.pop();
+						messageArray.shift();
+						message = messageArray.join("");
+						
+						$("#success").html(message);
+					}
+				});
+			});
+		});
+	</script>
 	
 	<!-- BODY section -->
 	<body>
 		<h1>Employee sign up</h1>
 		<h2>Join us, and climb up your career stairs!</h2>
 		
+		<!-- SIGN UP div -->
 		<div class="well">
 			<h4>Sign up form</h4>
-			<input type="text" class="form-control" placeholder="First name..."><br>
-			<input type="text" class="form-control" placeholder="Last name..."><br>
-			<input type="text" class="form-control" placeholder="E-mail..."><br>
-			<input type="text" class="form-control" placeholder="Education (college, high school)..."><br>
-			<input type="text" class="form-control" placeholder="Main occupation..."><br>
+			<div id="log"></div>
+			
+			<input type="text" id="first" class="form-control" placeholder="First name..."><br>
+			<input type="text" id="last" class="form-control" placeholder="Last name..."><br>
+			<input type="text" id="email" class="form-control" placeholder="E-mail..."><br>
+			<input type="password" id="password" class="form-control" placeholder="Password..."><br>
+			<input type="text" id="education" class="form-control" placeholder="Education (college, high school)..."><br>
+			<input type="text" id="occupation" class="form-control" placeholder="Main occupation..."><br>
+			
 			<div class="row">
-				<div class="col-md-3"><input type="text" class="form-control" placeholder="DD..."></div>
-				<div class="col-md-3"><input type="text" class="form-control" placeholder="MM..."></div>
-				<div class="col-md-6"><input type="text" class="form-control" placeholder="YYYY..."></div>
+				<div class="col-md-3"><input id="day" type="text" class="form-control" placeholder="DD..."></div>
+				<div class="col-md-3"><input id="month" type="text" class="form-control" placeholder="MM..."></div>
+				<div class="col-md-6"><input id="year" type="text" class="form-control" placeholder="YYYY..."></div>
 			</div><br>
-			<a href="home.html"><button class="btn btn-primary">Sign up</button></a>
+			
+			<button id="signup" class="btn btn-primary">Sign up</button>
+			
+			<!-- LOG IN div -->
+			<div class="well">
+				<h4>Log in</h4>
+				<p id="success"></p>
+				<button id="login" class="btn btn-success">Log in</button>
+			</div>
 		</div>
 	</body>
 
